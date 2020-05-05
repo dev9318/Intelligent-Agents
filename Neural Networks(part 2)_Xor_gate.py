@@ -2,13 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+#required to predit a numbert between 0 and 1
 def sigmoid (x):
     return 1/(1 + np.exp(-x))
 
+#required for back propagation
 def sigmoid_derivative(x):
     return x * (1 - x)
 
-
+#making data for training it
 inputs = np.array([[0,0],[0,1],[1,0],[1,1]])
 expected_output = np.array([[0],[1],[1],[0]])
 
@@ -16,7 +18,7 @@ expected_output = np.array([[0],[1],[1],[0]])
 epochs = 10000
 lr = 0.1
 
-
+#making random weights and bias
 hidden_weights = np.random.uniform(size=(2,2))
 hidden_bias =np.random.uniform(size=(1,2))
 output_weights = np.random.uniform(size=(2,1))
@@ -27,7 +29,7 @@ errors=[]
 x=[]
 
 
-#Training algorithm
+#Training algorithm executing the algorithm 10000 times
 for i in range(epochs):
 
     x.append(i)
@@ -38,7 +40,7 @@ for i in range(epochs):
     hidden_layer_activation += hidden_bias
     hidden_layer_output = sigmoid(hidden_layer_activation)
 
-    # 2nd layer
+    # 2nd layer (using the output of the previous layer as input)
     output_layer_activation = np.dot(hidden_layer_output,output_weights)
     output_layer_activation += output_bias
     predicted_output = sigmoid(output_layer_activation)
@@ -62,8 +64,9 @@ for i in range(epochs):
     hidden_bias += np.sum(d_hidden_layer,axis=0,keepdims=True) * lr
 
 
-plt.plot(x,errors)
-plt.xlabel("No. of Iterations")
-plt.ylabel("Error")
-plt.show()
+#ploting a graph of error(for input (0,0)) vs no. of iterations (beacuase it looks cool)
+#plt.plot(x,errors)
+#plt.xlabel("No. of Iterations")
+#plt.ylabel("Error")
+#plt.show()
 
